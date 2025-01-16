@@ -1,6 +1,7 @@
 ---
-- name: Test Ansible on localhost
-  hosts: local
+- hosts: my_servers
+  become: true
   tasks:
-    - name: Ping localhost
-      ansible.builtin.ping:
+    - name: Print OS info
+      ansible.builtin.package:
+        name: apache2
