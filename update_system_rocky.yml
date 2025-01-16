@@ -1,5 +1,5 @@
 - name: Update System Packages on Rocky Linux
-  hosts: my_servers
+  hosts: all
   become: yes
   tasks:
     - name: Ensure dnf is up to date
