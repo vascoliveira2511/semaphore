@@ -2,6 +2,32 @@
 - hosts: my_servers
   become: true
   tasks:
-    - name: Print OS info
+    - name: Update package cache
       ansible.builtin.package:
-        name: apache2
+        update_cache: yes
+
+    - name: Install Apache web server (httpd)
+      ansible.builtin.package:
+        name: httpd
+        state: present
+
+    - name: Ensure Apache is started and enabled
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Allow HTTP traffic in the firewall
+      ansible.builtin.firewalld:
+        service: http
+        permanent: yes
+        state: enabled
+
+    - name: Reload the firewall
+      ansible.builtin.service:
+        name: firewalld
+        state: reloaded
+
+    - name: Ensure SELinux allows HTTP traffic
+      ansible.builtin.command:
+        cmd: setsebool -P httpd_can_network_connect on
