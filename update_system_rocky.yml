@@ -1,0 +1,8 @@
+- name: Update System Packages on Rocky Linux
+  hosts: single_machine
+  become: yes
+  tasks:
+    - name: Ensure dnf is up to date
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
